@@ -40,11 +40,20 @@ gp = GPR(
     kernel=1*RBF(
         length_scale=np.ones(4),
         ),
-    normalize_y=True
+    #normalize_y=True
     )
 
 #Fit the gp
 gp.fit(Xtrain,ytrain)
+
+#A new plot
+plt.figure(0)
+
+#Set title of plot
+plt.title("Validation plot using one gp")
+
+plt.xlabel('Test samples')
+plt.ylabel('Predicted test samples')
 
 #Validation plot
 plt.plot(
@@ -60,8 +69,9 @@ plt.plot(
 def factory():
     return GPR(
         kernel = 1 * RBF(
-            length_scale = np.ones(4)
-            )
+            length_scale = np.ones(4),
+            ),
+        normalize_y = True
         )
 
 #A list of one gp per output dimension
@@ -73,7 +83,13 @@ for i,gp in enumerate(gps):
         Xtrain,
         ytrain.iloc[:,i]
         )
-    
+
+#Another figure
+plt.figure(1)    
+
+#Set title of plot
+plt.title("Validation plot using several gps")
+
 #Validation plot
 for i,gp in enumerate(gps): 
     plt.plot(
@@ -81,6 +97,12 @@ for i,gp in enumerate(gps):
         gp.predict(Xtest),
         '+'
         )
+
+plt.xlabel('Test samples')
+plt.ylabel('Predicted test samples')
+
+plt.show()
+    
     
 '''
     Conclusion, overall accuracy is improved but there are several outliers 
