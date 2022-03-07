@@ -9,38 +9,17 @@ Created on Mon Feb 28 21:10:26 2022
 #Modules
 from sklearn.gaussian_process import GaussianProcessRegressor as GPR
 from sklearn.gaussian_process.kernels import RBF
-import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+from lib import dataloader
 
-#import y_data 
-y_data = pd.read_csv('tu_data.csv')
-y_data = y_data.pivot_table(
-    columns='name',
-    values = 'fgr',
-    index = 'case',
-)
-
-#import x_data
-x_data = pd.read_csv(
-    'calibration_samples.csv', 
-    index_col=0
-    )
-
-#X and y data
-Xtrain,Xtest,ytrain,ytest = train_test_split(
-    x_data,
-    y_data,
-    random_state= 19953
-    ) 
+Xtrain,Xtest,ytrain,ytest = dataloader('data.p')
 
 #One gp
 gp = GPR(
     kernel=1*RBF(
         length_scale=np.ones(4),
         ),
-    #normalize_y=True
     )
 
 #Fit the gp
