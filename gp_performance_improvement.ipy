@@ -21,9 +21,8 @@ gp_regressor.fit()
 
 #%%
 
-%%time
+%time gp_regressor.predict(Xtest)
 pred = gp_regressor.predict(Xtest)
-
 
 #%%
 validation_plot(ytest,pred)
