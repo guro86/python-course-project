@@ -1,2 +1,2 @@
-from .mygp import mygp
+from .gp import gp_ensamble
 from .dataloader import dataloader
